@@ -1,32 +1,17 @@
 <template>
-  <div v-if="event">
-    <h1>{{ event.title }}</h1>
+  <div v-if="GStore.event">
+    <h1>{{ GStore.event.title }}</h1>
     <div id="nav">
       <router-link :to="{ name: 'EventDetails' }"> Details </router-link>|
       <router-link :to="{ name: 'EventRegister' }"> Register </router-link>|
       <router-link :to="{ name: 'EventEdit' }"> Edit </router-link>
     </div>
-    <router-view :event="event" />
+    <router-view :event="GStore.event" />
   </div>
 </template>
 
 <script>
-import EventService from '@/services/EventService';
 export default {
-  props: ['id'],
-  name: 'EventLayout',
-  data() {
-    return {
-      event: null
-    };
-  },
-  async created() {
-    try {
-      const { data } = await EventService.getEvent(this.id);
-      this.event = data;
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  inject: ['GStore']
 };
 </script>
